@@ -10,7 +10,7 @@
     "check": "find src public/js -name \"*.js\" -exec node --check {} \\; && echo OK"
   },
   "engines": {
-    "node": ">=18"
+    "node": "22.x"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
