@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход и регистрация — TankBoost</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">Tank<span>Boost</span></a>
+    <nav class="nav">
+      <a href="/">Услуги</a>
+      <a href="/cart.html">Корзина <span class="badge" id="cart-count">0</span></a>
+      <a href="/account.html" id="nav-account">Кабинет</a>
+      <a href="/login.html" id="nav-login">Войти</a>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Вход</button>
+      <button class="tab" data-tab="register">Регистрация</button>
+    </div>
+    <form id="login" class="form card" novalidate>
+      <label>Email <input name="email" type="email" required autocomplete="email"></label>
+      <label>Пароль <input name="password" type="password" required minlength="8" autocomplete="current-password"></label>
+      <p class="error"></p>
+      <button class="btn" type="submit">Войти</button>
+    </form>
+    <form id="register" class="form card hidden" novalidate>
+      <label>Email <input name="email" type="email" required autocomplete="email"></label>
+      <label>Пароль (мин. 8 символов) <input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
+      <label>Повторите пароль <input name="password2" type="password" required minlength="8" autocomplete="new-password"></label>
+      <label class="check"><input name="pdConsent" type="checkbox" required>
+        <span>Я даю <a href="/consent.html" target="_blank">согласие на обработку персональных данных</a> и принимаю условия <a href="/offer.html" target="_blank">оферты</a> и <a href="/privacy.html" target="_blank">политики конфиденциальности</a></span></label>
+      <p class="error"></p>
+      <button class="btn" type="submit">Зарегистрироваться</button>
+    </form>
+  </main>
+  <footer class="footer">
+    <p>© TankBoost. Не связан с Lesta Games. «Мир танков» — товарный знак правообладателя.</p>
+    <p><a href="/privacy.html">Политика конфиденциальности</a> · <a href="/consent.html">Согласие на обработку ПДн</a> · <a href="/offer.html">Публичная оферта</a></p>
+  </footer>
+  <script src="/js/api.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[
+  {"id":"lvl-10","category":"Прокачка","title":"Прокачка ветки до X уровня","description":"Прокачаем выбранную ветку техники от текущего уровня до X. Срок зависит от стартовой точки.","price":4990,"durationDays":14,"options":{"nation":true}},
+  {"id":"lvl-8","category":"Прокачка","title":"Прокачка до VIII уровня","description":"Исследование ветки до VIII уровня, включая модули.","price":2490,"durationDays":7,"options":{"nation":true}},
+  {"id":"silver-10m","category":"Фарм","title":"Фарм серебра — 10 млн","description":"Заработаем 10 000 000 кредитов на вашем аккаунте.","price":1990,"durationDays":5},
+  {"id":"silver-50m","category":"Фарм","title":"Фарм серебра — 50 млн","description":"Крупный пакет: 50 000 000 кредитов.","price":8490,"durationDays":20},
+  {"id":"wn8-plus-200","category":"Статистика","title":"Повышение WN8 на +200","description":"Поднимем рейтинг WN8 за счёт серии качественных боёв.","price":3490,"durationDays":10},
+  {"id":"tank-specific","category":"Техника","title":"Прокачка конкретной техники","description":"Укажите машину — исследуем её и полностью прокачаем модули и экипаж.","price":1490,"durationDays":5,"options":{"tankName":true}},
+  {"id":"battlepass","category":"Боевой пропуск","title":"Прохождение боевого пропуска","description":"Закроем все этапы текущего сезона боевого пропуска.","price":2990,"durationDays":21}
+]
