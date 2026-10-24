@@ -12,3 +12,12 @@ services:
         value: "true"
       - key: SESSION_SECRET
         generateValue: true
+      # --- ЮKassa: секреты вносятся в Render Dashboard вручную, в репозиторий не попадают ---
+      # Пустые ключи → MOCK-режим (тестовая оплата без денег)
+      - key: YOOKASSA_SHOP_ID
+        sync: false
+      - key: YOOKASSA_SECRET_KEY
+        sync: false
+      - key: PUBLIC_BASE_URL   # например https://wot-boost.onrender.com или свой домен
+        sync: false
+      # Чек 54-ФЗ (необязательно): YOOKASSA_RECEIPT=true, YOOKASSA_VAT_CODE, YOOKASSA_TAX_SYSTEM_CODE

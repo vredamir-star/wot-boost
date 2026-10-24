@@ -9,8 +9,8 @@ function ensureToken(req) {
 
 function verify(req, res, next) {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
-  // TODO: исключить сюда путь вебхука YooKassa (у него своя проверка)
-  if (req.path === '/billing/webhook') return next();
+  // Вебхук ЮKassa приходит без сессии/CSRF; подлинность проверяется повторным запросом платежа по API
+  if (req.path === '/payments/webhook') return next();
   const sent = req.get('X-CSRF-Token') || '';
   const expected = req.session.csrf || '';
   const ok = sent.length === expected.length && expected.length > 0 &&

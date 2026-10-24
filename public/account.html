@@ -32,12 +32,12 @@
         <button class="btn" type="submit">Сохранить</button>
         <button class="btn btn--ghost" type="button" id="logout">Выйти</button>
       </form>
-      <form id="topup" class="form card" novalidate>
-        <h2>Баланс: <span id="balance">—</span></h2>
-        <label>Сумма пополнения, ₽ <input name="amount" type="number" min="100" max="100000" step="1" required value="500"></label>
-        <p class="error"></p><p class="ok"></p>
-        <button class="btn" type="submit">Пополнить через ЮKassa</button>
-      </form>
+      <section class="card" id="pay-info">
+        <h2>Оплата заказов</h2>
+        <p class="notice hidden" id="mock-banner"><strong>ТЕСТОВЫЙ РЕЖИМ.</strong> Платёжная система не подключена: оплата имитируется, деньги не списываются.</p>
+        <p>Оплата банковской картой через ЮKassa: принимаются карты <strong>«Мир»</strong>, Visa и Mastercard. Данные карты вводятся только на защищённой странице ЮKassa — наш сайт их не видит и не хранит.</p>
+        <p class="error" id="orders-msg"></p>
+      </section>
     </div>
     <h2>Мои заказы</h2>
     <section id="orders" class="list"><p class="muted">Загрузка…</p></section>

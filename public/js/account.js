@@ -1,5 +1,5 @@
 // Личный кабинет: профиль, баланс, заказы
-const STATUS = { new: 'Новый', paid: 'Оплачен', in_progress: 'В работе', done: 'Выполнен', cancelled: 'Отменён' };
+const STATUS = { new: 'Ожидает оплаты', paid: 'Оплачен', in_progress: 'В работе', done: 'Выполнен', cancelled: 'Отменён' };
 
 (async () => {
   const s = await Api.state();
@@ -19,26 +19,47 @@ const STATUS = { new: 'Новый', paid: 'Оплачен', in_progress: 'В р�
   });
   $('#logout').addEventListener('click', async () => { await Api.post('/api/logout'); location.href = '/'; });
 
-  // Баланс и пополнение
-  const loadBalance = async () => { $('#balance').textContent = fmtKop((await Api.get('/api/billing')).balance); };
-  await loadBalance();
-  const tf = $('#topup');
-  tf.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!validateForm(tf)) return showMsg(tf, 'Сумма от 100 до 100 000 ₽');
-    try {
-      const r = await Api.post('/api/billing/topup', { amount: Number(tf.amount.value) });
-      if (r.confirmationUrl) location.href = r.confirmationUrl; // редирект на страницу оплаты ЮKassa
-      else showMsg(tf, r.message || 'Платёж создан', 'ok');
-    } catch (err) { showMsg(tf, err.message); }
-  });
+  $('#mock-banner').classList.toggle('hidden', !s.paymentsMock);
+
+  // Статус оплаты (по последнему платежу)
+  const PAY_LABEL = {
+    succeeded: ['Оплачено', 'pay-ok'],
+    pending: ['Платёж ожидает подтверждения', 'pay-wait'],
+    canceled: ['Оплата отменена — можно повторить', 'pay-fail'],
+  };
+  const paidMark = (o) => (o.status === 'new' ? PAY_LABEL[o.payment_status] || ['Ожидает оплаты', 'pay-wait'] : PAY_LABEL.succeeded);
 
   // Заказы
+  const params = new URLSearchParams(location.search);
+  const highlight = Number(params.get('order')) || null;
   const orders = await Api.get('/api/orders');
-  $('#orders').innerHTML = orders.length ? orders.map((o) => `
-    <div class="card">
+  $('#orders').innerHTML = orders.length ? orders.map((o) => {
+    const [label, cls] = paidMark(o);
+    const payable = o.status === 'new';
+    return `
+    <div class="card${o.id === highlight ? ' card--hl' : ''}">
       <div class="row"><strong>Заказ №${o.id}</strong><span class="status">${esc(STATUS[o.status] || o.status)}</span></div>
       <p class="muted">${esc(o.created_at)} · ${fmtKop(o.total)}</p>
       <p>${o.items.map((i) => esc(i.title) + (i.tankName ? ' (' + esc(i.tankName) + ')' : '')).join(', ')}</p>
-    </div>`).join('') : '<p class="muted">Заказов пока нет</p>';
+      ${o.status === 'cancelled' ? '' : `<p class="paystatus ${cls}">${esc(label)}</p>`}
+      ${payable ? `<button class="btn" data-pay="${o.id}">Оплатить ${fmtKop(o.total)}</button>
+      <p class="muted small">Visa / Mastercard / МИР — оплата на странице ЮKassa</p>` : ''}
+    </div>`;
+  }).join('') : '<p class="muted">Заказов пока нет</p>';
+
+  $('#orders').addEventListener('click', async (e) => {
+    const id = Number(e.target.dataset.pay);
+    if (!id) return;
+    e.target.disabled = true;
+    $('#orders-msg').textContent = '';
+    try {
+      const r = await Api.post('/api/payments', { orderId: id });
+      // Переходим только на https (ЮKassa) или на наш тестовый mock-путь
+      if (/^https:\/\//.test(r.confirmationUrl) || /^\/mock-checkout\.html\?/.test(r.confirmationUrl)) location.href = r.confirmationUrl;
+      else throw new Error('Не удалось получить ссылку на оплату');
+    } catch (err) {
+      $('#orders-msg').textContent = err.message;
+      e.target.disabled = false;
+    }
+  });
 })();

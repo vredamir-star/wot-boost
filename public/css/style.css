@@ -69,3 +69,13 @@ input.invalid { border-color: var(--danger); }
 .footer { border-top: 1px solid var(--border); padding: 16px 24px; color: var(--muted); font-size: 13px; text-align: center; }
 
 @media (max-width: 600px) { .header { padding: 12px 16px; } .nav { gap: 12px; font-size: 14px; } }
+
+/* Оплата */
+.notice { background: rgba(242,169,0,.12); border: 1px solid var(--accent); border-radius: 8px; padding: 10px 12px; }
+.notice--test { border-color: var(--danger); background: rgba(255,92,92,.12); }
+.small { font-size: 13px; }
+.paystatus { font-weight: 600; margin: 4px 0 10px; }
+.pay-ok { color: var(--success); } .pay-wait { color: var(--accent); } .pay-fail { color: var(--danger); }
+.card--hl { border-color: var(--accent); }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn--danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); }

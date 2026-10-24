@@ -27,6 +27,7 @@ api.use('/profile', require('./routes/profile'));
 api.use('/services', require('./routes/catalog'));
 api.use('/orders', require('./routes/orders'));
 api.use('/billing', require('./routes/billing'));
+api.use('/payments', require('./routes/payments'));
 api.use((req, res) => res.status(404).json({ error: 'Не найдено' }));
 app.use('/api', api);
 
@@ -38,4 +39,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: 'Внутренняя ошибка' });
 });
 
-app.listen(config.port, '0.0.0.0', () => console.log(`WoT Boost listening on port ${config.port}`));
+if (require.main === module) {
+  app.listen(config.port, '0.0.0.0', () => console.log(`WoT Boost listening on port ${config.port}`));
+}
+module.exports = app; // для тестов (test/*.test.js)

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const db = require('../db');
+const config = require('../config');
 const v = require('../validate');
 const { authLimiter } = require('../middleware/rateLimit');
 const csrf = require('../middleware/csrf');
@@ -37,6 +38,7 @@ router.get('/state', (req, res) => {
     authenticated: !!req.session.userId,
     user: req.session.userId ? db.users.findPublic(req.session.userId) : null,
     csrfToken: csrf.ensureToken(req),
+    paymentsMock: config.yookassa.mock, // фронтенд показывает пометку «тестовый режим»
   });
 });
 
